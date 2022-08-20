@@ -22,8 +22,8 @@ app.jinja_env.filters["hora"] = hora
 app.jinja_env.filters["fecha"] = fecha
 
 # SQL
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:LM46780396@localhost/catelottidb'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://cjmkxblioaatzt:b60269893ff19ac01204bc6889a75679edfa6bd4e78994575b91fa5dffbb4487@ec2-34-227-135-211.compute-1.amazonaws.com:5432/d6rv3rv72nh9gr'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:LM46780396@localhost/catelottidb'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://cjmkxblioaatzt:b60269893ff19ac01204bc6889a75679edfa6bd4e78994575b91fa5dffbb4487@ec2-34-227-135-211.compute-1.amazonaws.com:5432/d6rv3rv72nh9gr'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
@@ -68,11 +68,4 @@ MAIL_USE_TLS = False
 
 # Cargar el blueprint
 app.register_blueprint(gym)
-
-with app.app_context():
-    db.create_all()
-    db.session.commit()
-    
-if __name__ == "__main__":
-    app.run(debug=True)
 
