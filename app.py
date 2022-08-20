@@ -4,6 +4,7 @@ from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager
 from flask_security import Security, current_user
+from flask_sqlalchemy import SQLAlchemy
 from utils.db import db
 from utils.filters import fecha, hora
 from flask_migrate import Migrate
@@ -26,7 +27,7 @@ app.jinja_env.filters["fecha"] = fecha
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://cjmkxblioaatzt:b60269893ff19ac01204bc6889a75679edfa6bd4e78994575b91fa5dffbb4487@ec2-34-227-135-211.compute-1.amazonaws.com:5432/d6rv3rv72nh9gr'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db.init_app(app)
+db = SQLAlchemy(app)
 
 # Admin
 class AdminView(ModelView):
