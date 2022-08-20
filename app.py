@@ -27,6 +27,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:LM46780396@localhost/catel
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
+with app.app_context():
+    db.create_all()
 
 # Admin
 class AdminView(ModelView):
