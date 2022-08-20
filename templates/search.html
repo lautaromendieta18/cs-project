@@ -1,0 +1,374 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Profesores
+{% endblock %}
+{% block main %}
+
+<div class="my-5">a</div>
+
+<form action="/profesor/search">
+  <div class="container text-center my-4">
+      <div class="row">
+      <div class="col">
+      <input name="id" type="number" class="form-control" placeholder="ID">
+      </div>
+      <div class="col">
+      <input name="email" type="text" class="form-control" placeholder="Correo">
+      </div>
+      <div class="col">
+        <select class="form-select" name="plan" aria-label="Default select example">
+          <option selected disabled>Plan</option>
+          <option value="Estándar">Estándar</option>
+          <option value="Personalizado">Personalizado</option>
+          <option value="Personal Trainer">Personal Trainer</option>
+        </select>
+      </div>
+      <div class="col">
+          <button class="btn btn-outline-danger" type="submit">Buscar</button>
+      </div>
+  </div>
+  </div>
+</form>
+    
+
+
+<div class="container text-center">
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">ALUMNOS</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">VISITANTES</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="inactivo-tab" data-bs-toggle="tab" data-bs-target="#inactivo-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">INACTIVOS</button>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+      <table class="table">
+        <thead>
+          <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Alumno</th>
+              <th scope="col"></th>
+              <th scope="col">Correo</th>
+              <th scope="col">Teléfono</th>
+              <th scope="col">Plan</th>
+              <th scope="col"></th>
+              <th scope="col">Roles</th>
+              <th scope="col">Fecha</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            {% for user in users %}
+            {% if user.has_role("Visitante") or user.has_role("Inactivo") %}
+
+            {% else %}
+            <tr>
+                <th scope="row">{{ user.id }}</th>
+                <td>{{ user.username }}</td>
+                <td><button style="border: none; background: none;" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{ user.id }}">
+                  <img src="/static/assets/expediente2.png"></button>
+                  <div class="modal fade" id="exampleModal{{ user.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel{{ user.id }}">Historial de {{ user.username }}</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="container text-center">
+                            <table class="table">
+                              <thead>
+                              <tr>
+                                  <th scope="col">Peso</th>
+                                  <th scope="col">Porcentaje de Grasa</th>
+                                  <th scope="col">Masa muscular</th>
+                                  <th scope="col">Masa ósea</th>
+                                  <th scope="col">Edad biológica</th>
+                                  <th scope="col">Grasa visceral</th>
+                                  <th scope="col">Fecha</th>
+                                  <th scope="col"></th>
+                              </tr>
+                              </thead>
+                              <tbody class="table-group-divider">
+                                {% for stat in stats %}
+                                {% if stat.user_id == user.id %}
+                                  <tr>
+                                      <td scope="row">{{ stat.peso }}</td>
+                                      <td>{{ stat.porcentaje_grasa }}%</td>
+                                      <td>{{ stat.masa_muscular }}</td>
+                                      <td>{{ stat.masa_osea }}</td>
+                                      <td>{{ stat.edad }}</td>
+                                      <td>{{ stat.grasa_visceral }}</td>
+                                      <td>{{ stat.time }}</td>
+                                      <td>
+                                        <form action="/profesor/delete/registro" method="post">
+                                          <input type="hidden" name="statid" id="statid" value="{{ stat.id }}">
+                                          <input type="image" src="/static/assets/trash.png">
+                                        </form>
+                                      </td>
+                                  </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                          </table>
+                          <form action="/add" method="post">
+                            <input type="hidden" name="id" value="{{ user.id }}">
+                            <div class="row mx-5">
+                                <div class="col">
+                                    <label for="peso">Peso:</label>
+                                    <input type="number" class="form-control" name="peso" placeholder="Peso" id="peso" value="0">
+                                </div>
+                                <div class="col">
+                                    <label for="grasa1">% de Grasa:</label>
+                                    <input type="number" class="form-control" name="grasa1" placeholder="Porcentaje de grasa" id="porcentaje" value="0">
+                                </div>
+                                <div class="col">
+                                    <label for="peso">Masa muscular:</label>
+                                    <input type="number" class="form-control" name="masa1" placeholder="Masa muscular" id="masa_muscular" value="0">
+                                </div>
+                                <div class="col">
+                                    <label for="peso">Masa ósea:</label>
+                                    <input type="number" class="form-control" name="masa2" placeholder="Masa ósea" id="masa_osea" value="0">
+                                </div>
+                                <div class="col">
+                                    <label for="peso">Edad biológica:</label>
+                                    <input type="number" class="form-control" name="edad" placeholder="Edad biológica" id="edad" value="0">
+                                </div>
+                                <div class="col">
+                                    <label for="peso">Grasa visceral:</label>
+                                    <input type="number" class="form-control" name="grasa2" placeholder="Grasa visceral" id="grasa_visceral" value="0">
+                                </div>
+                              </div>
+                        </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                          <button type="submit" class="btn btn-danger">Guardar cambios</button>
+                        </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.numero }}</td>
+                <td id="{{ user.id }}">{{ user.plan }}</td>
+                <td>
+                  <button onclick="edit('{{ user.id }}')" style="border: none; background: none;"><img src="/static/assets/edit.png"></button>
+                </td>
+                <td>{{ user.roles[0].name }}</td>
+                <td>{{ user.fecha | fecha }}</td>
+                <td>
+                  <form action="/profesor/bajar" method="post">
+                      <input type="hidden" name="id" value="{{ user.id }}">
+                      <input type="image" src="/static/assets/down.png">
+                  </form>
+                </td>
+                <td>
+                  {% if user.has_role('Admin') or user.has_role('Profesor') %}
+                  {% else %}
+                  <button style="border: none; background: none;" data-bs-toggle="modal" data-bs-target="#eliminar{{user.id}}">
+                      <img src="/static/assets/trash.png">
+                    </button>
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="eliminar{{user.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Eliminar a {{ user.username }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            Vas a eliminar a {{ user.username }}, este cambio es permanente.
+                          </div>
+                          <div class="modal-footer">
+                            <form action="/profesor/delete" method="post">
+                              <input type="hidden" name="id" value="{{ user.id }}">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                              <button type="submit" class="btn btn-primary">Confirmar</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  {% endif %}
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Teléfono</th>
+            <th scope="col">Plan</th>
+            <th scope="col"></th>
+            <th scope="col">Fecha</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          {% for user in users %}
+          {% if user.has_role("Visitante") %}
+          <tr>
+              <th scope="row">{{ user.id }}</th>
+              <td>{{ user.username }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.numero }}</td>
+              <td id="{{ user.id }}">{{ user.plan }}</td>
+              <td>
+                  <button onclick="edit('{{ user.id }}')" style="border: none; background: none;"><img src="/static/assets/edit.png"></button>
+              </td>
+              <td>{{ user.fecha | fecha }}</td>
+              <td>
+                <form action="/profesor/verificar" method="post">
+                  <input type="hidden" name="id" value="{{ user.id }}">
+                  <input type="image" src="/static/assets/verify.png">
+                </form>
+              </td>
+              <td>
+                <button style="border: none; background: none;" data-bs-toggle="modal" data-bs-target="#eliminar{{user.id}}">
+                  <img src="/static/assets/trash.png">
+                </button>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="eliminar{{user.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Eliminar a {{ user.username }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Vas a eliminar a {{ user.username }}, este cambio es permanente.
+                      </div>
+                      <div class="modal-footer">
+                        <form action="/profesor/delete" method="post">
+                          <input type="hidden" name="id" value="{{ user.id }}">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                          <button type="submit" class="btn btn-primary">Confirmar</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+          </tr>
+          {% else %}
+
+          {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="tab-pane fade" id="inactivo-tab-pane" role="tabpanel" aria-labelledby="inactivo-tab" tabindex="0">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Teléfono</th>
+            <th scope="col">Plan</th>
+            <th scope="col"></th>
+            <th scope="col">Fecha</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          {% for user in users %}
+          {% if user.has_role("Inactivo") %}
+          <tr>
+              <th scope="row">{{ user.id }}</th>
+              <td>{{ user.username }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.numero }}</td>
+              <td id="{{ user.id }}">{{ user.plan }}</td>
+              <td>
+                  <button onclick="edit('{{ user.id }}')" style="border: none; background: none;"><img src="/static/assets/edit.png"></button>
+              </td>
+              <td>{{ user.fecha | fecha }}</td>
+              <td>
+                  <form action="/profesor/verificar" method="post">
+                      <input type="hidden" name="id" value="{{ user.id }}">
+                      <input class="mt-1" type="image" src="/static/assets/verify.png">
+                  </form>
+              </td>
+              <td>
+                <button style="border: none; background: none;" data-bs-toggle="modal" data-bs-target="#eliminar{{user.id}}">
+                  <img src="/static/assets/trash.png">
+                </button>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="eliminar{{user.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Eliminar a {{ user.username }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Vas a eliminar a {{ user.username }}, este cambio es permanente.
+                      </div>
+                      <div class="modal-footer">
+                        <form action="/profesor/delete" method="post">
+                          <input type="hidden" name="id" value="{{ user.id }}">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                          <button type="submit" class="btn btn-primary">Confirmar</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+          </tr>
+          {% else %}
+
+          {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+function edit(id) {
+    const plan = document.getElementById(id);
+    plan.innerHTML = `<form name="edit${id}" action="/profesor/edit" method="post">\
+                    <input type="hidden" name="id" value="${id}">\
+                    <select onchange="apply(edit${id})" class="form-select my-3" name="nuevoPlan" aria-label="Default select example">\
+                        <option selected disabled>Elije el nuevo plan</option>\
+                        <option value="Estándar">Estándar</option>\
+                        <option value="Personalizado">Personalizado</option>\
+                        <option value="Personal Trainer">Personal Trainer</option>\
+                    </select>\
+                    </form>`
+}
+
+function apply(name) {
+    name.submit()
+}
+</script>
+
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}

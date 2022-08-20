@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<head>
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link href="/static/styles.css" rel="stylesheet">
+
+    <title>Catelotti Sport: {% block title %}{% endblock %}</title>
+
+</head>
+{% if current_user.is_authenticated %}
+<nav class="navbar bg-light fixed-top">
+  <div class="container-fluid">
+    <div class="d-flex justify-content-center">
+      <a class="navbar-brand" href="/"><img src="/static/assets/catelottinav.png"></a>
+    </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">CATELOTTI SPORT</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Perfil</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/registros">Registros</a>
+          </li>
+          {% if current_user.has_role('Profesor') or current_user.has_role('admin') %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Profesor
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/turnos">Ver turnos</a></li>
+              <li><a class="dropdown-item" href="/profesor">Panel del profesor</a></li>
+            </ul>
+          </li>
+          {% endif %}
+        </ul>
+        <a href="/logout" class="btn btn-outline-danger my-5">SALIR</a>
+      </div>
+    </div>
+  </div>
+</nav>
+{% else %}
+<body>
+  <nav class="navbar navbar-expand-lg bg-light fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"><img src="static/assets/catelottinav.png"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">CATELOTTI SPORT</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/" style="color: #BB2D3B"><b>INICIO</b></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" style="color: #BB2D3B"><b>PRODUCTOS</b></a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #BB2D3B">
+                <b>PLANES</b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/estandar">Estándar</a></li>
+                <li><a class="dropdown-item" href="/personalizado">Personalizado</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="/personal">Personal trainer</a></li>
+              </ul>
+            </li>
+          </ul>
+          <a href="/login" class="btn btn-outline-danger me-2">ACCEDER</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  {% endif %}
+    <main>
+    {% block main %}{% endblock %}
+    </main>
+    {% block footer %}
+    <nav class="navbar d-flex justify-content-center" style="background-color: rgb(192, 35, 35)">
+      <div class="d-flex justify-content-center w-100" id="footer">
+        <h3 class="mt-4 me-2" style="color:black">CATELOTTI</h3><h3 class="mt-4" style="color:white">SPORT</h3>
+      </div>
+      <div class="d-flex text-center">
+        <h6 class="mb-4 me-2" style="color:black"><i>"Sé tu mejor versión"</i></h6>
+      </div>
+    </nav>
+    <div class="d-flex justify-content-center w-100" style="background-color: rgb(192, 35, 35)">
+      <p class="fs-6" style="color:white"><a href="https://www.instagram.com/lautaromendieta0/" style="color:white"><b>@L. Martin Mendieta</b></a> Desarrollador Web</p>
+    </div>
+    {% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+</body>

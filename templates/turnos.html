@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Turnos
+{% endblock %}
+
+{% block main %}
+<div class="my-5">a</div>
+<div class="container text-center">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">HOY</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">MAÑANA</button>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Alumno</th>
+                <th scope="col">Hora</th>
+                <th scope="col"></th>
+                <th scope="col">Actividad</th>
+              </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {% for reserva in hoy %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ reserva.username }}</td>
+                    <td id="{{ reserva.id }}">{{ reserva.hora }}</td>
+                    <td>
+                      <button onclick="edit('{{ reserva.id }}')" style="border: none; background: none;"><img src="/static/assets/edit.png"></button>
+                    </td>
+                    <td>{{ reserva.tipo }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Alumno</th>
+                <th scope="col">Hora</th>
+                <th scope="col"></th>
+                <th scope="col">Actividad</th>
+              </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {% for reserva in manana %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ reserva.username }}</td>
+                    <td id="{{ reserva.id }}">{{ reserva.hora }}</td>
+                    <td>
+                      <button onclick="edit('{{ reserva.id }}')" style="border: none; background: none;"><img src="/static/assets/edit.png"></button>
+                    </td>
+                    <td>{{ reserva.tipo }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+</div>
+
+<script>
+  function edit(id) {
+      const hora = document.getElementById(id);
+      hora.innerHTML = `<form name="cambio" action="/turnos/edit" method="post">
+                        <input name="id" type="hidden" value="${id}">
+                        <select onchange="apply(cambio)" required class="form-select my-3" name="hora" aria-label="Default select example">
+                        <option value="None" selected disabled>Hora</option>
+                        {% for hora in horario %}
+                        <option value="{{ hora }}">{{ hora | hora }}</option>
+                        {% endfor %}
+                        </select>`
+  }
+  
+  function apply(name) {
+      name.submit()
+  }
+  </script>
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}

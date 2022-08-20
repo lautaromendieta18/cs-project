@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Registros
+{% endblock %}
+
+{% block main %}
+        <div class="my-5">a</div>
+        <div class="d-flex justify-content-center my-5">
+            <h3 id="titulo" class="me-2"><b>ACTUAL ({{ fecha }})</b></h3>    
+        </div>
+        <div class="container text-center">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Peso actual</th>
+                    <th scope="col">Porcentaje de Grasa</th>
+                    <th scope="col">Masa muscular</th>
+                    <th scope="col">Masa ósea</th>
+                    <th scope="col">Edad biológica</th>
+                    <th scope="col">Grasa visceral</th>
+                </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    <tr>
+                        <td scope="row">{{ frStat.peso }}</td>
+                        <td>{{ frStat.porcentaje_grasa }}%</td>
+                        <td>{{ frStat.masa_muscular }}</td>
+                        <td>{{ frStat.masa_osea }}</td>
+                        <td>{{ frStat.edad }}</td>
+                        <td>{{ frStat.grasa_visceral }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="mt-5 d-flex justify-content-center">
+            <span class="mt-3 me-1"><img src="static/assets/expediente.png"></span>
+            <h3 id="titulo" class="my-3 me-2"><b>HISTORIAL</b></h3>    
+        </div>
+        <div class="container text-center">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Peso</th>
+                    <th scope="col">Porcentaje de Grasa</th>
+                    <th scope="col">Masa muscular</th>
+                    <th scope="col">Masa ósea</th>
+                    <th scope="col">Edad biológica</th>
+                    <th scope="col">Grasa visceral</th>
+                    <th scope="col">Fecha</th>
+                </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    {% for stat in stats %}
+                    <tr>
+                        <td scope="row">{{ stat.peso }}</td>
+                        <td>{{ stat.porcentaje_grasa }}%</td>
+                        <td>{{ stat.masa_muscular }}</td>
+                        <td>{{ stat.masa_osea }}</td>
+                        <td>{{ stat.edad }}</td>
+                        <td>{{ stat.grasa_visceral }}</td>
+                        <td>{{ stat.time }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}

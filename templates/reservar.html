@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Reservar
+{% endblock %}
+
+{% block main %}
+    <div class="my-5">a</div>
+    <div class="container">
+        <div class="container-fluid text-center" style="width: 50%">
+            <form action="/reservar" method="post">
+                <select required class="form-select my-3" id="dia" name="dia" aria-label="Default select example">
+                    <option value="None" selected disabled>Día</option>
+                    {% if diaHoy == 6 or diaHoy == 7 %}
+                    <option disabled>Hoy (cerrado)</option>
+                    {% else %}
+                    <option value="{{ hoy }}">Hoy ({{ hoy }})</option>
+                    {% endif %}
+                    {% if diaManana == 6 or diaManana == 7 %}
+                    <option disabled>Mañana (cerrado)</option>
+                    {% else %}
+                    <option value="{{ manana }}">Mañana ({{ manana }})</option>
+                    {% endif %}
+                </select>
+                <select required class="form-select my-3" id="tipo" name="tipo" aria-label="Default select example">
+                    <option value="None" selected disabled>Tipo de reserva</option>
+                    <option value="Musculación">Musculación</option>
+                    <option value="Funcional">Funcional</option>
+                </select>
+                <div id="horario">
+                    <select required class="form-select my-3" name="hora" aria-label="Default select example">
+                        <option value="None" selected disabled>Hora</option>
+                        {% for hora in horario %}
+                        <option value="{{ hora }}">{{ hora | hora }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button class="btn btn-danger my-3" type="submit">Reservar</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}

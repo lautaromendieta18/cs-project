@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Añadir
+{% endblock %}
+
+{% block main %}
+<div class="my-5">a</div>
+    <div class="d-flex justify-content-center mt-3">
+        <h6>* En caso de no tener algún dato, dejar en 0.</h6>
+    </div>
+    <form action="/add" method="post">
+        <div class="row mx-5">
+            <div class="col">
+                <label for="peso">Peso:</label>
+                <input type="number" class="form-control" name="peso" placeholder="Peso" id="peso" value="0">
+            </div>
+            <div class="col">
+                <label for="grasa1">Porcentaje de Grasa:</label>
+                <input type="number" class="form-control" name="grasa1" placeholder="Porcentaje de grasa" id="porcentaje" value="0">
+            </div>
+            <div class="col">
+                <label for="peso">Masa muscular:</label>
+                <input type="number" class="form-control" name="masa1" placeholder="Masa muscular" id="masa_muscular" value="0">
+            </div>
+            <div class="col">
+                <label for="peso">Masa ósea:</label>
+                <input type="number" class="form-control" name="masa2" placeholder="Masa ósea" id="masa_osea" value="0">
+            </div>
+            <div class="col">
+                <label for="peso">Edad biológica:</label>
+                <input type="number" class="form-control" name="edad" placeholder="Edad biológica" id="edad" value="0">
+            </div>
+            <div class="col">
+                <label for="peso">Grasa visceral:</label>
+                <input type="number" class="form-control" name="grasa2" placeholder="Grasa visceral" id="grasa_visceral" value="0">
+            </div>
+          </div>
+        <div class="d-flex justify-content-center my-3">
+            <button class="btn btn-primary justify-self-center" type="submit">Añadir</button>
+        </div>
+    </form>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
