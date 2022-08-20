@@ -1,7 +1,7 @@
 # Tablas de mi base de datos
 
 from flask_security import SQLAlchemyUserDatastore, RoleMixin, UserMixin
-from app import db
+from utils.db import db
 
 roles_users = db.Table('roles_users',
     db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
