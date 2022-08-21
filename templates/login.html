@@ -26,31 +26,31 @@
 <body>
 
         <div class="d-flex justify-content-center mt-3 mb-1">
-            <img src="/static/assets/catelottilogo.png" width="12%" height="12%" alt="">
+            <img src="/static/assets/catelottilogo.png" width="20%" height="20%" alt="">
         </div>
-        <div class="d-flex justify-content-center mb-3">
-            <h5 class="mx-1 mb-4">Iniciar sesión</h5>
+        <div class="d-flex justify-content-center my-2">
+            <h5 class="mx-1 mb-4"><b>ACCEDÉ A TU CUENTA</b></h5>
         </div>
-        <main class="container-fluid">
+        <main class="container">
             <form action="/login" method="post">
-                <div class="mb-3">
-                    <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="email" name="email" placeholder="Correo electrónico" type="text">
-                </div>
-                <div class="mb-4">
-                    <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Contraseña" type="password">
-                </div>
-                <div class="d-flex justify-content-center my-2">
+                <div class="form-floating mb-3">
+                    <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <label for="floatingInput">Ingresá tu correo</label>
+                  </div>
+                  <div class="form-floating mb-4">
+                    <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                    <label for="floatingPassword">Contraseña</label>
+                  </div>
+                  <div class="my-4" style="color:gray">
+                    ¿No recordás tu contraseña?
+                  </div>
+                
+                <div class="container text-center my-2">
                     <a href="/register" class="btn btn-outline-danger mx-3">Crear cuenta</a>
                     <button class="btn btn-danger" type="submit">Iniciar Sesión</button>
                 </div>
             </form>
         </main>
         <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"></script>
-        <script>
-      
-            if ('serviceWorker' in navigator) {
-              navigator.serviceWorker.register('/service-worker.js');
-            }
-          
-        </script>
+        <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
