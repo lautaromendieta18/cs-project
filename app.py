@@ -1,5 +1,6 @@
 # Aplicación
-from flask import Flask, redirect
+import os
+from flask import Flask, redirect, send_from_directory
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager
@@ -69,6 +70,11 @@ MAIL_PORT = 465
 MAIL_USE_SSL = True
 MAIL_USE_TLS = False
 
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static', 'assets'),
+                               'favicon.ico', mimetype='image/png')
 # Cargar el blueprint
 app.register_blueprint(gym)
 
