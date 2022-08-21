@@ -1,9 +1,10 @@
 #  Rutas de mi aplicación Web.
-from flask import Blueprint, render_template, request, redirect
+from app import app
+import os
+from flask import Blueprint, render_template, request, redirect, send_from_directory
 from flask_security import roles_accepted
 from flask_login import login_required, logout_user, current_user
 from flask_security.utils import login_user
-from sqlalchemy import asc
 from models.gymModels import Users, Stats, Schedule, Frases, user_datastore
 from werkzeug.security import check_password_hash, generate_password_hash
 from utils.db import db
@@ -16,6 +17,11 @@ gym = Blueprint('gym', __name__)
 HORARIOS_GYM = [time(9, 0), time(9, 30), time(10, 00), time(10, 30), time(11, 00), time(11, 30), time(12, 00), time(12, 30),
 time(13, 00), time(13, 30), time(14, 00), time(14, 30), time(15, 00), time(15, 30), time(16, 00), time(16, 30), time(17, 00),
 time(17, 30), time(18, 00), time(18, 30), time(19, 00), time(19, 30), time(20, 00), time(20, 30)]
+
+@gym.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static', 'assets'),
+                               'favicon.ico', mimetype='image/png')
 
 @gym.route("/")
 def index():

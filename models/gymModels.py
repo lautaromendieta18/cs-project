@@ -6,7 +6,7 @@ from utils.db import db
 roles_users = db.Table('roles_users',
     db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
     db.Column('role_id', db.Integer, db.ForeignKey('roles.id')))
-
+ 
 # Tabla de usuarios
 class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
