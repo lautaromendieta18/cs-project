@@ -35,10 +35,6 @@ def register():
 
     if request.method == 'POST':
         # Chequeos de seguridad
-
-
-        if not request.form.get('username'):
-            return render_template("error.html", num=400, error="DATO FALTANTE: Nombre.")
         if not request.form.get('email'):
             return render_template("error.html", num=400, error="DATO FALTANTE: Email.")
         if not request.form.get('number') or request.form.get('number') == 0:
@@ -63,9 +59,11 @@ def register():
             return render_template("error.html", num=400, error="Las contraseñas no coinciden.")
 
         user_datastore.create_user(
-                username = request.form.get('username'),
+                username = request.form.get('name') + " " + request.form.get('surname'),
                 email = request.form.get('email'),
-                numero = "+54" + request.form.get('number'),
+                numero = request.form.get('number'),
+                dni = request.form.get('dni'),
+                direccion = request.form.get('direccion'),
                 hash = generate_password_hash(request.form.get('password')),
                 fecha = datetime.now(timezone('America/Buenos_Aires')),
                 plan = request.form.get("plan")
