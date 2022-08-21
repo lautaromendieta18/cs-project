@@ -1,5 +1,4 @@
 #  Rutas de mi aplicación Web.
-from app import app
 import os
 from flask import Blueprint, render_template, request, redirect, send_from_directory
 from flask_security import roles_accepted
@@ -20,7 +19,7 @@ time(17, 30), time(18, 00), time(18, 30), time(19, 00), time(19, 30), time(20, 0
 
 @gym.route('/favicon.ico')
 def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static', 'assets'),
+    return send_from_directory(os.path.join(gym.root_path, 'static', 'assets'),
                                'favicon.ico', mimetype='image/png')
 
 @gym.route("/")
