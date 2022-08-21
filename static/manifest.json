@@ -1,7 +1,7 @@
 
 {
     "name": "CatelottiApp",
-    "short_name": "CS",
+    "short_name": "CatelottiApp",
     "start_url": "/",
     "scope": "/",
     "icons": [

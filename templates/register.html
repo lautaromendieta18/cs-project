@@ -7,17 +7,7 @@
     <link href="/static/styles.css" rel="stylesheet">
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="icons/apple-icon-180.png">
-
-    <location path="static/service-worker.js">
-        <system.webServer>
-            <httpProtocol>
-                <customHeaders>
-                    <add name="Service-Worker-Allowed" value="/" />
-                </customHeaders>
-            </httpProtocol>
-        </system.webServer>
-      </location>
-    <link rel="manifest" href="/static/manifest.json">
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
 
     <title>Catelotti Sport: Registrarse</title>
 
@@ -26,40 +16,58 @@
 <body>
 
     <div class="d-flex justify-content-center my-3">
-        <img src="/static/assets/catelottilogo.png" width="12%" height="12%" alt="">
+        <img src="/static/assets/catelottilogo.png" width="20%" height="20%" alt="Catelotti Logo">
     </div>
     
     <div class="container text-center my-3">
-      <h5>REGISTRATE PARA BRINDARTE NUESTRA ATENCIÓN</h5>
+      <h5>REGISTRATE EN NUESTRA APP</h5>
     </div>
   
-    <main class="container-fluid">
-        <div class="d-flex justify-content-center">
+    <main class="container">
+        
             <form action="/register" method="post">
                 <div class="row">
-                    <div class="col-md-6 col-sm-12">
-                        <label for="username" class="form-label">Nombre completo *</label>
-                        <input type="text" required class="form-control mb-3" id="username" name="username" aria-label="Nombre completo">
-                    </div>
-                    <div class="col-md-6 col-sm-12">
-                        <label for="email" class="form-label">Correo electrónico *</label>
-                        <input type="text" required class="form-control mb-3" name="email" id="email" aria-label="Correo electrónico">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <label for="Numero de Celular" class="form-label">Número de celular *</label>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">+54</span>
-                            <input type="number" name="number" class="form-control" aria-label="Numero de Celular">
+                    <div class="col-12 my-2">
+                        <div class="form-floating mb-3">
+                            <input name="name" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <label for="floatingInput">Nombre...</label>
                         </div>
                     </div>
-                    <div class="col-12">
+                    <div class="col-12 my-2">
+                        <div class="form-floating mb-3">
+                            <input name="surname" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <label for="floatingInput">Apellido...</label>
+                        </div>
+                    </div>
+                    <div class="col-12 my-2">
+                        <div class="form-floating mb-3">
+                            <input name="dni" type="number" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <label for="floatingInput">DNI</label>
+                        </div>
+                    </div>
+                    <div class="col-12 my-2">
+                        <div class="form-floating mb-3">
+                            <input name="number" type="number" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <label for="floatingInput">Teléfono</label>
+                        </div>
+                    </div>
+                    <div class="col-12 my-2">
+                        <div class="form-floating mb-3">
+                            <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <label for="floatingInput">Correo electrónico</label>
+                        </div>
+                    </div>
+                    <div class="col-12 my-2">
+                        <div class="form-floating mb-3">
+                            <input name="fdn" type="date" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <label for="floatingInput">Fecha de nacimiento</label>
+                        </div>
+                    </div>
+                    <div class="col-12 my-2">
                         <label for="password" id="label" class="form-label">Contraseña (mínimo 8 caracteres)*</label>
                         <input type="password" required class="form-control mb-3" id="password" name="password" aria-label="Contraseña">
                     </div>
-                    <div class="col-12">
+                    <div class="col-12 my-2">
                         <label for="confirmation" class="form-label">Confirme su contraseña *</label>
                         <input type="password" required class="form-control mb-3" id="confirmation" name="confirmation" aria-label="Confirmacion">
                     </div>
@@ -70,12 +78,11 @@
                     <option value="Personalizado">Personalizado</option>
                     <option value="Personal Trainer">Personal Trainer</option>
                 </select>
-                <div class="d-flex justify-content-center">
+                <div class="container text-center">
                     <button class="btn btn-danger my-3" type="submit">Registrarse</button>
                 </div>
             </form>
-        </div>
-        
+            <button class="add-button">Add to home screen</button>
     </main>
 
     <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"></script>
@@ -93,11 +100,5 @@
         
          
     </script>
-    <script>
-      
-        if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register('/service-worker.js');
-        }
-      
-    </script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
