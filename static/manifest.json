@@ -2,8 +2,8 @@
 {
     "name": "CatelottiApp",
     "short_name": "CS",
-    "start_url": "/static/",
-    "scope": "/static/",
+    "start_url": "/",
+    "scope": "/",
     "icons": [
         {
           "src": "icons/manifest-icon-192.maskable.png",
