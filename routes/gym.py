@@ -47,10 +47,6 @@ def register():
         if request.form.get("plan") not in ["Estándar", "Personalizado", "Personal Trainer"]:
             return render_template("error.html", num=400, error="DATO INCORRECTO: Plan.")
         
-        matches = db.session.query(Users).filter_by(username=request.form.get('username')).all()
-        if len(matches) > 0:
-            return render_template("error.html", num=400, error="Nombre de usuario en uso.")
-        
         matchesmail = db.session.query(Users).filter_by(email=request.form.get('email')).all()
         if len(matchesmail) > 0:
             return render_template("error.html", num=400, error="El email ya está en uso.")
