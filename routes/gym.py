@@ -23,7 +23,7 @@ def index():
     if current_user.is_authenticated:
         return redirect("/perfil")
     else:
-        return render_template("inicio.html")
+        return redirect("/login")
 
 @gym.route("/productos")
 def productos():
