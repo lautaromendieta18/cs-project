@@ -1,5 +1,4 @@
 # Aplicación
-import mimetypes
 import os
 from flask import Flask, redirect, send_from_directory
 from flask_admin import Admin
@@ -70,6 +69,7 @@ MAIL_PORT = 465
 MAIL_USE_SSL = True
 MAIL_USE_TLS = False
 
+app.register_blueprint(gym)
 
 @app.route('/favicon.ico')
 def favicon():
@@ -79,7 +79,4 @@ def favicon():
 @app.route('/service-worker.js')
 def sw():
     return app.send_static_file('service-worker.js')
-
-# Cargar el blueprint
-app.register_blueprint(gym)
 

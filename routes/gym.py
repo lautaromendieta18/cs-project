@@ -1,6 +1,6 @@
 #  Rutas de mi aplicación Web.
 import os
-from flask import Blueprint, render_template, request, redirect
+from flask import Blueprint, render_template, request, redirect, url_for
 from flask_security import roles_accepted
 from flask_login import login_required, logout_user, current_user
 from flask_security.utils import login_user
@@ -19,12 +19,10 @@ time(17, 30), time(18, 00), time(18, 30), time(19, 00), time(19, 30), time(20, 0
 
 
 @gym.route("/")
-def index():
+def inicio():
     if current_user.is_authenticated:
-        print("LOGUEADO")
         return redirect("/perfil")
     else:
-        print("NO LOGUEADO")
         return redirect("/login")
 
 @gym.route("/productos")
